@@ -56,32 +56,14 @@ def init_db():
         additional_headers={"X-OpenAI-Api-Key": openai_api_key},
     )
 
-    logging.info("Connected to Weaviate")
-
     try:
         # Print the entire schema
         schema = client.schema.get()
         print(f"Current schema: {schema}")
 
-        # Check if the schema contains the class
-        if not client.schema.contains("VNTANA"):
-            logging.info("VNTANA class not found, creating...")
-            # If not, create the class
-            class_obj = {
-                "class": "VNTANA",
-                "properties": [
-                    {
-                        "dataType": ["text"],
-                        "name": "title",
-                    },
-                    {
-                        "dataType": ["text"],
-                        "name": "body",
-                    },
-                ],
-            }
-            client.schema.create_class(class_obj)
-            logging.info("VNTANA class created")
+        # Assume that the class "VNTANA" exists
+        print("Assuming that the class 'VNTANA' exists in the schema.")
+
     except Exception as e:
         print(f"Error initializing database: {e}")
         logging.error(f"Error initializing database: {e}")

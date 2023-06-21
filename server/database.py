@@ -2,6 +2,7 @@ import weaviate
 import os
 import logging
 import re
+import traceback
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -42,16 +43,6 @@ def get_client():
     auth_credentials = _build_auth_credentials()
     return weaviate.Client(host, auth_client_secret=auth_credentials)
 
-# Retrieve keys from environment variables
-weaviate_url = os.getenv("WEAVIATE_URL")
-weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
-openai_api_key = os.getenv("OPEN_AI_API_KEY")
-
-client = weaviate.Client(
-    url=weaviate_url,
-    auth_client_secret=weaviate.AuthApiKey(api_key=weaviate_api_key),
-    additional_headers={"X-OpenAI-Api-Key": openai_api_key},
-)
 
 def init_db():
     # Retrieve keys from environment variables
@@ -65,6 +56,8 @@ def init_db():
         additional_headers={"X-OpenAI-Api-Key": openai_api_key},
     )
 
+    logging.info("Connected to Weaviate")
+
     try:
         # Print the entire schema
         schema = client.schema.get()
@@ -72,6 +65,7 @@ def init_db():
 
         # Check if the schema contains the class
         if not client.schema.contains("VNTANA"):
+            logging.info("VNTANA class not found, creating...")
             # If not, create the class
             class_obj = {
                 "class": "VNTANA",
@@ -87,5 +81,8 @@ def init_db():
                 ],
             }
             client.schema.create_class(class_obj)
+            logging.info("VNTANA class created")
     except Exception as e:
         print(f"Error initializing database: {e}")
+        logging.error(f"Error initializing database: {e}")
+        logging.error(traceback.format_exc())

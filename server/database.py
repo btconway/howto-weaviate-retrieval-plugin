@@ -3,6 +3,8 @@ import os
 import logging
 import re
 
+logging.basicConfig(level=logging.DEBUG)
+
 INDEX_NAME = "VNTANA"
 
 SCHEMA = {
@@ -52,7 +54,22 @@ client = weaviate.Client(
 )
 
 def init_db():
+    # Retrieve keys from environment variables
+    weaviate_url = os.getenv("WEAVIATE_URL")
+    weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
+    openai_api_key = os.getenv("OPEN_AI_API_KEY")
+
+    client = weaviate.Client(
+        url=weaviate_url,
+        auth_client_secret=weaviate.AuthApiKey(api_key=weaviate_api_key),
+        additional_headers={"X-OpenAI-Api-Key": openai_api_key},
+    )
+
     try:
+        # Print the entire schema
+        schema = client.schema.get()
+        print(f"Current schema: {schema}")
+
         # Check if the schema contains the class
         if not client.schema.contains("VNTANA"):
             # If not, create the class
@@ -72,5 +89,3 @@ def init_db():
             client.schema.create_class(class_obj)
     except Exception as e:
         print(f"Error initializing database: {e}")
-
-

@@ -2,8 +2,8 @@
     "schema_version": "v1",
     "name_for_human": "VNTANA_Retrieval_Plugin_V2",
     "name_for_model": "VNTANA_Retrieval_Plugin_V2",
-    "description_for_human": "Plugin to interact with documents using natural language. You can query, add and remove documents.",
-    "description_for_model": "Plugin to interact with documents using natural language. You can query, add and remove documents.",
+    "description_for_human": "Plugin for generating sales emails. This plugin assists the sales team at VNTANA by generating email content based on the Weaviate database. The plugin follows the writing style of Ben Conway, which is informal, friendly, straightforward, and concise. It also adheres to Chris Orlob's principles for selling, focusing on customer pain points, guiding the buying process, maintaining control and authority, building urgency, quantifying impact, and involving the right stakeholders. The plugin uses previous emails and company information to create relevant and personalized emails. It's designed to help the sales team communicate effectively with customers and drive sales.",
+    "description_for_model": "Plugin for generating sales emails. This plugin assists the sales team at VNTANA by generating email content based on the Weaviate database. The plugin follows the writing style of Ben Conway, which is informal, friendly, straightforward, and concise. It also adheres to Chris Orlob's principles for selling, focusing on customer pain points, guiding the buying process, maintaining control and authority, building urgency, quantifying impact, and involving the right stakeholders. The plugin uses previous emails and company information to create relevant and personalized emails. It's designed to help the sales team communicate effectively with customers and drive sales.",
     "auth": {
         "type": "user_http",
         "authorization_type": "bearer"

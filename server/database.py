@@ -21,7 +21,7 @@ def _is_wcs_domain(url: str) -> bool:
     return bool(re.search(pattern, url))
 
 def _build_auth_credentials():
-    url = os.environ.get("WEAVIATE_URL", "https://localhost:8080")
+    url = os.environ.get("WEAVIATE_URL", "https://qkkaupkrrpgbpwbekvzvw.gcp-c.weaviate.cloud")
 
     if _is_wcs_domain(url):
         api_key = os.environ.get("WEAVIATE_API_KEY")
@@ -36,7 +36,7 @@ def get_client():
     """
     Get a client to the Weaviate server
     """
-    host = os.environ.get("WEAVIATE_HOST", "http://localhost:8080")
+    host = os.environ.get("WEAVIATE_HOST", "https://qkkaupkrrpgbpwbekvzvw.gcp-c.weaviate.cloud")
     auth_credentials = _build_auth_credentials()
     return weaviate.Client(host, auth_client_secret=auth_credentials)
 

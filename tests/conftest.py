@@ -5,7 +5,7 @@ import time
 import requests
 import server.database
 
-HOST = "http://localhost:8080"
+HOST = "https://qkkaupkrrpgbpwbekvzvw.gcp-c.weaviate.cloud"
 
 
 @pytest.fixture(scope="module")

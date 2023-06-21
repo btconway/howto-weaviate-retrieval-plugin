@@ -146,8 +146,6 @@ def query(
         for doc in docs
     ]
 
-
-
 @app.post("/delete")
 def delete(
     delete_request: DeleteRequest,

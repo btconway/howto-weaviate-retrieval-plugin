@@ -4,7 +4,7 @@ info:
   description: Plugin for generating sales emails. This plugin assists the sales team at VNTANA by generating email content based on the Weaviate database. The plugin follows the writing style of Ben Conway, which is informal, friendly, straightforward, and concise. It also adheres to Chris Orlob's principles for selling, focusing on customer pain points, guiding the buying process, maintaining control and authority, building urgency, quantifying impact, and involving the right stakeholders. The plugin uses previous emails and company information to create relevant and personalized emails. It's designed to help the sales team communicate effectively with customers and drive sales.
   version: 'v1'
 servers:
-  - url: https://vntana-weaviate-plugin-c4a3b5a75aa1.herokuapp.com/
+  - url: https://vntana-weaviate-plugin-c4a3b5a75aa1.herokuapp.com
 paths:
   /upsert:
     post:

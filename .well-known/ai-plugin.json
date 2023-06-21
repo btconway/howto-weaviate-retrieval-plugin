@@ -1,7 +1,7 @@
 {
     "schema_version": "v1",
-    "name_for_human": "Weaviate Retrieval Plugin V2",
-    "name_for_model": "Weaviate_Retrieval_Plugin",
+    "name_for_human": "VNTANA Retrieval Plugin V2",
+    "name_for_model": "VNTANA Retrieval Plugin V2",
     "description_for_human": "Plugin to interact with documents using natural language. You can query, add and remove documents.",
     "description_for_model": "Plugin to interact with documents using natural language. You can query, add and remove documents.",
     "auth": {
@@ -10,10 +10,10 @@
       },
     "api": {
         "type": "openapi",
-        "url": "https://demo-retrieval-app.fly.dev/.well-known/openapi.yaml",
+        "url": "https://vntana-weaviate-plugin-c4a3b5a75aa1.herokuapp.com/.well-known/openapi.yaml",
         "is_user_authenticated": false
     },
-    "logo_url": "https://demo-retrieval-app.fly.dev/.well-known/logo.png",
-    "contact_email": "support@example.com",
+    "logo_url": "https://vntana-weaviate-plugin-c4a3b5a75aa1.herokuapp.com/.well-known/logo.png",
+    "contact_email": "ben@vntana.com",
     "legal_info_url": "http://www.example.com/legal"
 }

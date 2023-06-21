@@ -3,7 +3,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from contextlib import asynccontextmanager
 import logging
 
-from .database import get_client, init_db, INDEX_NAME
+from .database import get_weaviate_client, init_db, INDEX_NAME
 from .embedding import get_embedding
 from pydantic import BaseModel
 

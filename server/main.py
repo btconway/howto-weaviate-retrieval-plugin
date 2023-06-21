@@ -29,7 +29,7 @@ class Document(BaseModel):
 
 class Query(BaseModel):
     text: str
-    limit: int = 5
+    limit: int = 4
 
 
 class QueryResult(BaseModel):

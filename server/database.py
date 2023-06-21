@@ -1,6 +1,7 @@
 import weaviate
 import os
 import logging
+import re
 
 INDEX_NAME = "Document"
 

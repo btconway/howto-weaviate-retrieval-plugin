@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import weaviate
 
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
@@ -71,7 +72,18 @@ def get_weaviate_client():
     """
     Get a client to the Weaviate server
     """
-    yield get_client()
+    # Retrieve keys from environment variables
+    weaviate_url = os.getenv("WEAVIATE_URL")
+    weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
+    openai_api_key = os.getenv("OPEN_AI_API_KEY")
+
+    client = weaviate.Client(
+        url=weaviate_url,
+        auth_client_secret=weaviate.AuthApiKey(api_key=weaviate_api_key),
+        additional_headers={"X-OpenAI-Api-Key": openai_api_key},
+    )
+    yield client
+
 
 
 @app.get("/")

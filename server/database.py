@@ -47,7 +47,7 @@ def get_weaviate_client():
     client = weaviate.Client(
         url=weaviate_url,
         auth_client_secret=weaviate.AuthApiKey(api_key=weaviate_api_key),
-        additional_headers={"X-OpenAI-Api-Key": openai_api_key, "X-API-KEY": openai_api_key},
+        additional_headers={"X-OpenAI-Api-Key": openai_api_key},
     )
     return client
 

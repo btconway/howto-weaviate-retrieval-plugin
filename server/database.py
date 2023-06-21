@@ -3,7 +3,7 @@ import os
 import logging
 import re
 
-INDEX_NAME = "Document"
+INDEX_NAME = "VNTANA"
 
 SCHEMA = {
     "class": INDEX_NAME,
@@ -45,11 +45,13 @@ def init_db():
     Create the schema for the database if it doesn't exist yet
     """
     client = get_client()
+    class_name = SCHEMA["class"]
 
-    if not client.schema.contains(SCHEMA):
-        logging.debug("Creating schema")
-        client.schema.create_class(SCHEMA)
-    else:
-        class_name = SCHEMA["class"]
+    try:
+        client.schema.get_class(class_name)
         logging.debug(f"Schema for {class_name} already exists")
         logging.debug("Skipping schema creation")
+    except weaviate.exceptions.ClassNotFound:
+        logging.debug("Creating schema")
+        client.schema.create_class(SCHEMA)
+

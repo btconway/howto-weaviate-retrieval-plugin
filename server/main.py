@@ -132,6 +132,10 @@ def query(
         .do()
     )
 
+    if 'data' not in results:
+        print(f"Unexpected results from Weaviate query: {results}")
+        raise HTTPException(status_code=500, detail="Unexpected results from Weaviate query")
+
     docs = results["data"]["Get"][INDEX_NAME]
 
     return [
@@ -141,6 +145,7 @@ def query(
         )
         for doc in docs
     ]
+
 
 
 @app.post("/delete")

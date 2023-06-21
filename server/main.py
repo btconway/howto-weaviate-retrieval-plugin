@@ -125,7 +125,7 @@ def query(
     query_vector = get_embedding(query.text)
 
     results = (
-        client.query.get(INDEX_NAME, ["document_id", "text"])
+        client.query.get(INDEX_NAME, ["text"])
         .with_near_vector({"vector": query_vector})
         .with_limit(query.limit)
         .with_additional("certainty")

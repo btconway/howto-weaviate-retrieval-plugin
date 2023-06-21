@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from contextlib import asynccontextmanager
+import logging
 
 from .database import get_client, init_db, INDEX_NAME
 from .embedding import get_embedding
@@ -155,18 +156,22 @@ def query(
     concepts = get_concepts(query.text)
 
     results = (
-        client.query.get(INDEX_NAME, ["text"])
-        .with_near_text({"concepts": concepts})
-        .with_limit(query.limit)
-        .with_additional("certainty")
-        .do()
-    )
+    client.query.get(INDEX_NAME, ["text"])
+    .with_near_text({"concepts": concepts})
+    .with_limit(query.limit)
+    .with_additional("certainty")
+    .do()
+)
+
+    logging.debug(f"Results: {results}")
 
     if 'data' not in results or 'Get' not in results['data'] or INDEX_NAME not in results['data']['Get']:
         print(f"Unexpected results from Weaviate query: {results}")
         raise HTTPException(status_code=500, detail="Unexpected results from Weaviate query")
 
     docs = results["data"]["Get"].get(INDEX_NAME, [])
+
+    logging.debug(f"Docs: {docs}")
 
     return [
         QueryResult(

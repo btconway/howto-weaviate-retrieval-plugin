@@ -35,13 +35,21 @@ def _build_auth_credentials():
     else:
         return None
 
-def get_client():
+def get_weaviate_client():
     """
     Get a client to the Weaviate server
     """
-    host = os.environ.get("WEAVIATE_HOST", "https://qkkaupkrrpgbpwbekvzvw.gcp-c.weaviate.cloud")
-    auth_credentials = _build_auth_credentials()
-    return weaviate.Client(host, auth_client_secret=auth_credentials)
+    # Retrieve keys from environment variables
+    weaviate_url = os.getenv("WEAVIATE_URL")
+    weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+
+    client = weaviate.Client(
+        url=weaviate_url,
+        auth_client_secret=weaviate.AuthApiKey(api_key=weaviate_api_key),
+        additional_headers={"X-OpenAI-Api-Key": openai_api_key, "X-API-KEY": openai_api_key},
+    )
+    return client
 
 
 def init_db():

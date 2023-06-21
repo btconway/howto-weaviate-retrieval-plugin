@@ -140,7 +140,7 @@ def query(
 
     return [
         QueryResult(
-            document={"text": doc["text"], "document_id": doc["document_id"]},
+            document={"text": doc["text"], "document_id": doc.get("document_id", "default_value")},
             score=doc["_additional"]["certainty"],
         )
         for doc in docs

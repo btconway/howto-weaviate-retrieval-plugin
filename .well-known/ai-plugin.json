@@ -1,7 +1,7 @@
 {
     "schema_version": "v1",
-    "name_for_human": "VNTANA Retrieval Plugin V2",
-    "name_for_model": "VNTANA Retrieval Plugin V2",
+    "name_for_human": "VNTANA_Retrieval_Plugin_V2",
+    "name_for_model": "VNTANA_Retrieval_Plugin_V2",
     "description_for_human": "Plugin to interact with documents using natural language. You can query, add and remove documents.",
     "description_for_model": "Plugin to interact with documents using natural language. You can query, add and remove documents.",
     "auth": {

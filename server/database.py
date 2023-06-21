@@ -41,17 +41,25 @@ def get_client():
     return weaviate.Client(host, auth_client_secret=auth_credentials)
 
 def init_db():
-    """
-    Create the schema for the database if it doesn't exist yet
-    """
-    client = get_client()
-
-    if not client.schema.contains(SCHEMA["class"]):
-        logging.debug("Creating schema")
-        client.schema.create_class(SCHEMA)
-    else:
-        class_name = SCHEMA["class"]
-        logging.debug(f"Schema for {class_name} already exists")
-        logging.debug("Skipping schema creation")
+    try:
+        # Check if the schema contains the class
+        if not client.schema.contains("VNTANA"):
+            # If not, create the class
+            class_obj = {
+                "class": "VNTANA",
+                "properties": [
+                    {
+                        "dataType": ["text"],
+                        "name": "title",
+                    },
+                    {
+                        "dataType": ["text"],
+                        "name": "body",
+                    },
+                ],
+            }
+            client.schema.create_class(class_obj)
+    except Exception as e:
+        print(f"Error initializing database: {e}")
 
 

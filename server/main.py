@@ -17,7 +17,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 bearer_scheme = HTTPBearer()
 BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
 
-openai.api_key = os.environ.get("OPEN_AI_API_KEY")
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 def get_concepts(query_text):
     """

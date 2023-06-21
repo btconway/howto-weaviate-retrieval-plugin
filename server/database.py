@@ -40,6 +40,17 @@ def get_client():
     auth_credentials = _build_auth_credentials()
     return weaviate.Client(host, auth_client_secret=auth_credentials)
 
+# Retrieve keys from environment variables
+weaviate_url = os.getenv("WEAVIATE_URL")
+weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
+openai_api_key = os.getenv("OPEN_AI_API_KEY")
+
+client = weaviate.Client(
+    url=weaviate_url,
+    auth_client_secret=weaviate.AuthApiKey(api_key=weaviate_api_key),
+    additional_headers={"X-OpenAI-Api-Key": openai_api_key},
+)
+
 def init_db():
     try:
         # Check if the schema contains the class

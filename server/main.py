@@ -151,11 +151,12 @@ def query(
     """
     Query weaviate for documents
     """
-    query_vector = get_embedding(query.text)
+    # Get a list of concepts from the query text
+    concepts = get_concepts(query.text)
 
     results = (
         client.query.get(INDEX_NAME, ["text"])
-        .with_near_vector({"vector": query_vector})
+        .with_near_text({"concepts": concepts})
         .with_limit(query.limit)
         .with_additional("certainty")
         .do()
@@ -172,7 +173,7 @@ def query(
             document={"text": doc["text"], "document_id": doc.get("document_id", "default_value")},
             score=doc["_additional"]["certainty"],
         )
-        for doc in docs
+        for doc in docs if "text" in doc
     ]
 
 

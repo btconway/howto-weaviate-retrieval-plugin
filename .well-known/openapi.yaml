@@ -4,7 +4,7 @@ info:
   description: A plugin for querying, inserting and deleting documents using natural language queries
   version: 'v1'
 servers:
-  - url: https://demo-retrieval-app.fly.dev
+  - url: https://vntana-weaviate-plugin-c4a3b5a75aa1.herokuapp.com/
 paths:
   /upsert:
     post:

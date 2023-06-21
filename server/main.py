@@ -9,12 +9,41 @@ from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import openai
 import weaviate
 
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 bearer_scheme = HTTPBearer()
 BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
+
+openai.api_key = os.environ.get("OPEN_AI_API_KEY")
+
+def get_concepts(query_text):
+    """
+    Use OpenAI's chat API to generate a summary of concepts from the query text.
+    """
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-16k-0613",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an AI Assistant for VNTANA. Your only task is to provide useful queries for semantic search in my weaviate vector database. You are only concerned with the semantics of the user input. Your first task is to read the user input and determine what the VNTANA employee needs. Then, create a list of concepts to query based on the summary separated by commas. Finally, check your work against the below description of VNTANA and its products to make sure your query is relevant and return a query that follows the exact format below. Each concept to query is separated by a comma. This is all that you should return to me. I do not want to see the summary in your response at all."
+            },
+            {
+                "role": "user",
+                "content": f"Here is the user input: {query_text}. Return on the concepts to query in separated by a comma as per your assistant instructions. Do not provide any other text including, but not limited to 'concepts to query' or 'relevant concepts' or 'relevant queries'. Do not use any quotations when separating the concepts to query."
+            }
+        ]
+    )
+
+    # Extract the assistant's reply
+    assistant_reply = response['choices'][0]['message']['content']
+
+    # Split the reply into a list of concepts
+    concepts = assistant_reply.split(', ')
+
+    return concepts
 
 
 def validate_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
@@ -145,6 +174,7 @@ def query(
         )
         for doc in docs
     ]
+
 
 @app.post("/delete")
 def delete(

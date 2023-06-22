@@ -38,7 +38,7 @@ def test_upsert(weaviate_client):
     response = client.post("/upsert", json={"text": "Hello World", "document_id": "1"})
     assert response.status_code == 200
 
-    docs = weaviate_client.data_object.get(with_vector=True)["objects"]
+    docs = weaviate_client.data_object.get(with_vector=False)["objects"]
     assert len(docs) == 1
     assert docs[0]["properties"]["text"] == "Hello World"
     assert docs[0]["properties"]["document_id"] == "1"
